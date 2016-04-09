@@ -1,0 +1,22 @@
+<script id="listBuilder" type="text/html">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        [id^="divListBuilder"]{
+            background-color: white;
+            border: solid 10px;
+            padding: 10px;
+        }
+    </style>
+{{#JSONObjectForTemplate}}
+<div id="divListBuilder{{id}}">
+    <span>
+        <img src="{{img}}" alt="{{title}}">
+        <h2>{{title}}</h2>
+        <p>{{body}}</p>
+        <input type="button" value="This news is not for me"/>
+   </span>
+</div>
+{{/JSONObjectForTemplate}}
+</script>
