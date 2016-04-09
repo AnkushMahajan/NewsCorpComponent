@@ -5,18 +5,24 @@
         }
         [id^="divListBuilder"]{
             background-color: white;
-            border: solid 10px;
+            border: solid;
             padding: 10px;
+            margin: 10px;
+        }
+        input[type="button"]{
+            padding: 10px;
+            align: center;
+            margin:10px;
         }
     </style>
 {{#JSONObjectForTemplate}}
-<div id="divListBuilder{{id}}">
+<div id="divListBuilder{{id}}" style="display: {{display}}">
     <span>
         <img src="{{img}}" alt="{{title}}">
         <h2>{{title}}</h2>
         <p>{{body}}</p>
-        <input type="button" value="This news is not for me"/>
    </span>
 </div>
 {{/JSONObjectForTemplate}}
+ <input id="buttonLoadMore" type="button" value="Display More"/>
 </script>

@@ -5,7 +5,7 @@
 var context ={};
 
 function CustomList(configObj){
-    context.itemsVisible = configObj.items?configObj.items:10;
+    context.orderBy = configObj.orderBy?configObj.orderBy: "body"
     if(configObj.JSONURL){
         context.JSONURL = configObj.JSONURL;
     }else{
@@ -21,37 +21,48 @@ CustomList.prototype.createElem = function(){
     //Inherit from base HTMLELEMENT --> change it extend from DIV or UL if templating doesn't work out well
     newsListContext.newsElemProto = Object.create(HTMLElement.prototype);
 
+    
+    //Call Back will fire once the element has been loaded into the dom
     newsListContext.newsElemProto.attachedCallback = function(){
         var shadow = this.createShadowRoot();
         context.getJSON(function(request){
             context.JSONObject = JSON.parse(request.responseText);
             var temp = context.JSONObject;
 
-            //show the default/configured number of visible news
-            if(context.JSONObject.length > context.itemsVisible){
-                temp = context.JSONObject.splice(0,context.itemsVisible);
-            }
+            //sort array by configurable property passed by the user
+            temp.sort(compare);
+
             context.templateData = {};
             context.templateData.JSONObjectForTemplate = temp;
+
             $.get("../NewsCorpComponent/templates/ListBuilder.html", function(template, textStatus, jqXhr){
                 var template = $(template).filter("#listBuilder").html();
                 var formedHtml = Mustache.render(template, context.templateData);
                 shadow.innerHTML = formedHtml;
             });
-            
+
+
         }, errorHandler);
 
 
     };
 
-    newsListContext.NewsList = document.registerElement("news-list",{
-        prototype: newsListContext.newsElemProto
-    });
+    //check if the element is already registered before ,
+    // code used here for n number of instances of the element to be created, could have written a callback as well
+    if(!isRegistered("news-list")){
+        newsListContext.NewsList = document.registerElement("news-list",{
+            prototype: newsListContext.newsElemProto
+        });
+    }
 
     var newNewsList = document.createElement("news-list");
 
     document.body.appendChild(newNewsList);
 };
+
+function isRegistered(name){
+    return document.createElement(name).constructor !== HTMLElement;
+}
 
 context.getJSON = function(successCallBack, errorCallBack){
     var request = new XMLHttpRequest();
@@ -75,6 +86,15 @@ context.getJSON = function(successCallBack, errorCallBack){
 // failure error callback
 function errorHandler(request){
     context.error.JSONError ="Unable to fetch data";
+}
+
+function compare(a,b){
+    if (a[context.orderBy] < b[context.orderBy])
+        return -1;
+    else if (a[context.orderBy] < b[context.orderBy])
+        return 1;
+    else
+        return 0;
 }
 
 //Testing the initial setup
