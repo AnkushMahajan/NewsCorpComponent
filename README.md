@@ -8,3 +8,7 @@ All one need to do is to call new CustomList Constructor with an Object as param
 JSONURL is the required property to indicate from where the data needs to be fetched.
 
 You can also hide/show elems at launch by just passing display: none/true to your Objects in JSON
+
+Just do NPM install and Grunt to run the project.
+
+Also I'll remove the elem instation code from the JS , it has been added as of now to just run via launching index.html and not really using another JS file to load this one.
