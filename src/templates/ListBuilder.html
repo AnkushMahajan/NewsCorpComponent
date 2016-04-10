@@ -1,0 +1,22 @@
+<script id="listBuilder" type="text/html">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        [id^="divListBuilder"]{
+            float: left;
+            margin: 10px;
+            padding: 10px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+        }
+    </style>
+{{#JSONObjectForTemplate}}
+<div id="divListBuilder{{id}}" style="display: {{display}}">
+        <img src="{{img}}" alt="{{title}}">
+        <h2>{{title}}</h2>
+        <p>{{body}}</p>
+</div>
+{{/JSONObjectForTemplate}}
+</script>
