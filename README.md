@@ -1,4 +1,4 @@
-# NewsCorpComponent
+# WebComponnet
 First Cut for the custom web component
 
 It's a plugin to create custom web component of a list of divs on the fly
